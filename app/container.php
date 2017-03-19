@@ -12,6 +12,10 @@ $container['db'] = function ($c) use ($capsule) {
     return $capsule;
 };
 
+$container['auth'] = function ($c) {
+    return new App\Auth\Auth;
+};
+
 // Twig View
 $container['view'] = function ($c) {
     $settings = $c->get('settings');
@@ -25,6 +29,18 @@ $container['view'] = function ($c) {
         $c->get('request')->getUri())
     );
     $view->addExtension(new Twig_Extension_Debug());
+
+    $view->getEnvironment()->addGlobal('flash', $c['flash']);
+
+    if ($_SESSION['errors']) {
+        $view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
+        unset($_SESSION['errors']);
+    }
+
+    if ($_SESSION['old']) {
+        $view->getEnvironment()->addGlobal('old', $_SESSION['old']);
+        unset($_SESSION['old']);
+    }
 
     return $view;
 };
@@ -40,7 +56,7 @@ $container['validator'] = function ($c) {
 
 // Flash
 $container['flash'] = function ($c) {
-    return new Slim\Flash\Messages();
+    return new Slim\Flash\Messages;
 };
 
 // Csrf

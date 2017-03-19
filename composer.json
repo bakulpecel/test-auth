@@ -8,12 +8,12 @@
         "robmorgan/phinx": "^0.8.0",
         "vlucas/valitron": "^1.4",
         "illuminate/database": "^5.4",
-        "illuminate/pagination": "^5.4"
+        "illuminate/pagination": "^5.4",
+        "fzaninotto/faker": "^1.6"
     },
     
     "autoload": {
         "psr-4": {
-            "Core\\": "src/Core/",
             "App\\": "src/"
         }
     }
